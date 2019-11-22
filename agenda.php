@@ -1,6 +1,8 @@
 <?php
     date_default_timezone_set("America/Lima");
     /*setlocale(LC_TIME,"es_PE");*/
+    include "conectar.php";
+    $con = conectar();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +31,31 @@
         </div>
     </div>
     <div class="container-fluid pt-4">
+        <div class="row">
+            <div class="col-auto">
+                <?php
+                    $x = "SELECT * FROM evento";
+                    $rx = mysqli_query($con,$x);
+                    $fecha_c = date("Y-m-d",mktime(0, 0, 0, date("m") , date("d"), date("Y")));
+                    $hora_c = date("G",mktime(date("G"), 0, 0, date("m") , date("d"), date("Y")));
+                    foreach($rx as $valor1){
+                        if($valor1['fecha'] != NULL and $valor1['fecha'] == $fecha_c){
+                            if($valor1['hora'] >= $hora_c){
+                                $agregar_c = 'd-block';
+                                ?>
+                                <div class="alert alert-secondary alert-dismissible fade show <?php echo $agregar_c;?>" role="alert" style="display:none;">
+                                    <p class="m-0 text-muted">Recuerda: <span class="text-danger font-weight-bold"><?php echo $valor1['titulo'];?></span> a las <span><?php echo $valor1['hora'];?></span> </p>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <?php
+                            }
+                        }
+                    }
+                ?>
+            </div>
+        </div>
         <div class="row my-4">
             <div class="col-8 text-center">
                 <p class="my-0 h2 font-weight-bold">Agenda para esta semana</p>
@@ -70,10 +97,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -82,10 +105,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="table-responsive-lg">
-                    <?php 
-                        include "conectar.php";
-                        $con = conectar();
-                    ?>
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
@@ -102,7 +121,7 @@
                         </thead>
                         <tbody>
                             <?php
-                                for($j=7;$j<25;$j++){
+                                for($j=7;$j<24;$j++){
                                     ?>
                                     <tr>
                                         <th scope="row"><?php echo $j;?></th>
