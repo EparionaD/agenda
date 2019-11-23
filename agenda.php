@@ -104,7 +104,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="table-responsive-lg">
+                <div class="table-responsive">
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
