@@ -1,3 +1,7 @@
+<?php 
+    include "limpiar.php";
+    limpiar_datos($con);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
